@@ -12,8 +12,8 @@
 warnings off
 
 ( configuration )
-: srcfile	S" a.bth" ;
-: outfile 	S" a.html" ;
+: srcfile	S" blorth.bth" ;
+: outfile 	S" blorth.html" ;
 
 ( input buffer )
 VARIABLE 'src ( address )
@@ -70,14 +70,27 @@ variable #token
 : orESC     DUP [CHAR] ~ = IF DROP command RDROP EXIT THEN ;
 : interpret chr advance either& or< or> orEsc ( else ) emit ;
 : -end 	    offset @ #src @ U< ;
-: format    0 offset ! BEGIN -end WHILE interpret repeat ;
+: format    0 offset ! BEGIN -end WHILE interpret REPEAT ;
 : process   start format finish ;
 
 ( commands )
+: html	    ." <!DOCTYPE html><head><title>" srcfile TYPE ." </title></head><body>" CR ;
+: /html     ." </body></html>" ;
+: p	    ." <p>" ;
+: /p	    ." </p>" ;
+: +p	    /p CR p ;
+: h2	    ." <h2>" ;
+: /h2	    ." </h2>" ;
+: code      ." <code>" ;
+: /code	    ." </code> " ;
 : iw	    ." <i>" token TYPE ." </i> " ;
 : bw        ." <b>" token TYPE ." </b> " ;
-: pre	    ." <pre>" ;		
-: pre/	    ." </pre> " ;
+: cw	    ." <code>" token TYPE ." </code> " ;
+: href	    ." <a href=" token TYPE ." >" ;
+: /href	    ." </a> " ;
+: pre	    ." <blockquote><pre>" ;
+: /pre	    ." </pre></blockquote> " ;
+
 ( kick off procedures )
 : blorth         slurp process spew ;
 blorth BYE

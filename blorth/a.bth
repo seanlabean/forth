@@ -1,7 +1,10 @@
-Mary had a ~iw little lamb & blah blah ~bw blah >.<
+~html
+~h2 test ~/h2
+~p test test ~+p
+another paragraph ~/p
 
-~pre
-Ok I'll test this out
-why not.
-lol.
-~pre/
+~p
+"Data is code." A powerful mantra in an era when data are considered only insofar as their ability to be consumed. Indeed, large language models have taken the exact opposite position: "Code is data". Forth enables orthogonal perspectives in other ways too, the stack-based nature of the language requires the programmer to be hyper-aware of the state of the processes they write. Efficiency and care become unspoken yet obvious requirements of Forth programs. Programmers exposed only to modern languages may never consider the implications of creating, populating, and modifying a dataframe Megabytes in size. Of course, this is isn't a blunder or a misgiving on their part, such nonchalant behavior is encouraged by every language of the 21st century. It makes life easier, and the resources available to even beginners have redefined "efficiency" and "considerate programming" so many times and to such extreme degress that they have become antonyms of their original selves from the mid 1900s.
+~/p
+
+~/html
