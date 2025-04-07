@@ -12,8 +12,8 @@
 warnings off
 
 ( configuration )
-: srcfile	S" blorth.bth" ;
-: outfile 	S" blorth.html" ;
+: srcfile	S" myrr.bth" ;
+: outfile 	S" myrr.html" ;
 
 ( input buffer )
 VARIABLE 'src ( address )
@@ -84,6 +84,7 @@ variable #token
 : /h2	    ." </h2>" ;
 : code      ." <code>" ;
 : /code	    ." </code> " ;
+: img	    ." <figure><img src='" token TYPE ." 'style='width:250px;'/></figure>" ;
 : iw	    ." <i>" token TYPE ." </i> " ;
 : bw        ." <b>" token TYPE ." </b> " ;
 : cw	    ." <code>" token TYPE ." </code> " ;
@@ -93,5 +94,5 @@ variable #token
 : /pre	    ." </pre></blockquote> " ;
 
 ( kick off procedures )
-: blorth         slurp process spew ;
-blorth BYE
+: myrr      slurp process spew ;
+myrr BYE
