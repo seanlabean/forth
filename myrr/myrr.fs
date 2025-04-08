@@ -1,4 +1,4 @@
-( blorth - custom text to html parser )
+( myrr - custom text to html parser )
 ( Credit: Sean C. Lewis 2025, Samual A Falvo II 2008 )
 ( CC Share Alike: https://creativecommons.org/licenses/by-sa/4.0/deed.en )
 
@@ -12,7 +12,7 @@
 warnings off
 
 ( configuration )
-: srcfile	S" myrr.bth" ;
+: srcfile	S" myrr.mrr" ;
 : outfile 	S" myrr.html" ;
 
 ( input buffer )
@@ -74,7 +74,7 @@ variable #token
 : process   start format finish ;
 
 ( commands )
-: html	    ." <!DOCTYPE html><head><title>" srcfile TYPE ." </title></head><body>" CR ;
+: html	    ." <!DOCTYPE html><head><title>" outfile TYPE ." </title></head><body>" CR ;
 : /html     ." </body></html>" ;
 : style     ." <style> body { padding: 30px; text-align: absolute center; } </style>" CR ;
 : p	    ." <p>" ;
@@ -84,6 +84,11 @@ variable #token
 : /h2	    ." </h2>" ;
 : code      ." <code>" ;
 : /code	    ." </code> " ;
+: ul  	    ." <ul>" CR ;
+: /ul	    ." </ul>" CR ;
+: li	    ." <li>" ;
+: /li	    ." </li>" CR ;
+: +li	    /li CR li ;
 : img	    ." <figure><img src='" token TYPE ." 'style='width:250px;'/></figure>" ;
 : iw	    ." <i>" token TYPE ." </i> " ;
 : bw        ." <b>" token TYPE ." </b> " ;

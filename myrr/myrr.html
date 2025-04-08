@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><title>myrr.bth</title></head><body>
+<!DOCTYPE html><head><title>myrr.html</title></head><body>
 <style> body { padding: 30px; text-align: absolute center; } </style>
 
 <a href=https://slewis.wiki/site/home.html>Back Home </a> 
@@ -7,7 +7,7 @@
 <p>
 "Data is code." A powerful mantra in an era when data are considered only insofar as their ability to be consumed. Indeed, large language models have taken the exact opposite position: "Code is data". Forth enables orthogonal perspectives in other ways too, the stack-based nature of the language requires the programmer to be hyper-aware of the state of the processes they write. Efficiency and care become unspoken yet obvious requirements of Forth programs. Programmers exposed only to modern languages may never consider the implications of creating, populating, and modifying a dataframe Megabytes in size. Of course, this is isn't a blunder or a misgiving on their part, such nonchalant behavior is encouraged by every language of the 21st century. It makes life easier, and the resources available to even beginners have redefined "efficiency" and "considerate programming" so many times and to such extreme degress that they have become antonyms of their original selves from the mid 1900s. </p>
 <p>
-The beauty of Forth is in it's low-level nature. Being half a step above Assembly predicates the strict memory management and "walking on eggshells" approach to programming described earlier (indeed, if C gives you just enough rope to hang yourself with, Forth gives you a loaded shotgun and places the barrel neatly behind your teeth). Yet, a half-step above Assembly means Forth enables you to do almost anything. You can take full advantage of the polymorphic nature of the language and define your own custom syntax, abstracting the language from the most basic of stack manipulations to a subroutine-based code that reads almost like a poem. </p>
+The beauty of Forth is in it's low-level nature. Being half a step above Assembly predicates the strict memory management and "walking on eggshells" approach to programming described earlier (indeed, if C gives you the ability to shoot yourself in the foot, with Forth you may blow both legs clean off). Yet, a half-step above Assembly means Forth enables you to do almost anything. You can take full advantage of the polymorphic nature of the language and define your own custom syntax, abstracting the language from the most basic of stack manipulations to a subroutine-based code that reads almost like a poem. </p>
 <p>
 I've written a Forth-based interpreter of custom Markdown-like .bth files whose text executes code in the Forth language itself. I wanted to dive deep into a project that fully embraces "Data is code". Indeed, any language can parse Markdown into HTML, but it <i>feels</i> so different when the markdown text is not simply being replaced with strings from a lookup table, but instead is invoking calls to functions which modify the flow of the program and organization of the stack to manipulate the output data. In a way, the input data is writing itself. A sample .bth file might look something like this:</p><blockquote><pre>^html
 ^h2 A beautiful heading ^h2
@@ -26,7 +26,7 @@ And Forth commands can be nested within themselves in the source text. Hence, yo
 <p>
 To take the previous meta self-references to the extreme, the following is the code necessary to process the .bth sample and is the same code that constructs this page. About 60 lines of Forth. </p>
 <blockquote><pre>( configuration )
-: srcfile	S" myrr.bth" ;
+: srcfile	S" myrr.mrr" ;
 : outfile 	S" myrr.html" ;
 
 ( input buffer )
@@ -113,4 +113,23 @@ myrr BYE
 
 : start   HERE 'var ! ;
 : finish  HERE 'var @ - #var ! ;
+</pre></blockquote> 
+<h2>Vim hopping with <code>gforth</code> </h2><p>Forth's extensibility is so absolute that it is entirely within the power of a creative and fearless programmer to break the logic flow of the language itself to will a procedure into existence. Take Forth's interactive environment for example. A typical workflow likely has the following steps: <ul>
+<li>call <code>gforth</code> on you file </li>
+
+<li>test some functions, inspect the stack, etc. </li>
+
+<li>close out of gforth interative. </li>
+
+<li>call <code>vim</code> on your file, makes some edits. </li>
+
+<li>back to step one. </li>
+</ul>
+Annoying. Big time. Way too many key strokes. Most users will engage with Forth in this way. There's a hacky way to get around this by cleverly redefining the state of the <i>dictionary</i> (that's the collection of <i>words</i> constituting the Forth function-space). In doing so, we can call a custom word to start up a <code>vim</code> instance of the Forth file we are currently running, make edits to the file, and upon closing, update the dictionary state to recompile any edited words. Now, we can hop in and out of <code>vim</code> from within the <code>gforth</code> interactive environment! </p><blockquote><pre>: empty 	s" ---marker--- marker ---marker---" evaluate ;
+: edit		s" vim myrr.fs system ;
+: run 		s" myrr.fs" included ;
+: ecr		edit run ;
+
+( &lt;--- empty execute restores dictionary here )
+marker ---marker---
 </pre></blockquote> </body></html>

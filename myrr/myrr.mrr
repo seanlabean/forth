@@ -33,7 +33,7 @@ To take the previous meta self-references to the extreme, the following is the c
 
 ~pre
 ( configuration )
-: srcfile	S" myrr.bth" ;
+: srcfile	S" myrr.mrr" ;
 : outfile 	S" myrr.html" ;
 
 ( input buffer )
@@ -125,5 +125,17 @@ myrr BYE
 
 : start   HERE 'var ! ;
 : finish  HERE 'var @ - #var ! ;
+~/pre
+
+~h2 Vim hopping with ~cw gforth ~/h2
+~p Forth's extensibility is so absolute that it is entirely within the power of a creative and fearless programmer to break the logic flow of the language itself to will a procedure into existence. Take Forth's interactive environment for example. A typical workflow likely has the following steps: ~ul ~li call ~cw gforth on you file ~+li test some functions, inspect the stack, etc. ~+li close out of gforth interative. ~+li call ~cw vim on your file, makes some edits. ~+li back to step one. ~/li ~/ul Annoying. Big time. Way too many key strokes. Most users will engage with Forth in this way. There's a hacky way to get around this by cleverly redefining the state of the ~iw dictionary (that's the collection of ~iw words constituting the Forth function-space). In doing so, we can call a custom word to start up a ~cw vim instance of the Forth file we are currently running, make edits to the file, and upon closing, update the dictionary state to recompile any edited words. Now, we can hop in and out of ~cw vim from within the ~cw gforth interactive environment! ~/p
+~pre
+: empty 	s" ---marker--- marker ---marker---" evaluate ;
+: edit		s" vim myrr.fs system ;
+: run 		s" myrr.fs" included ;
+: ecr		edit run ;
+
+( <--- empty execute restores dictionary here )
+marker ---marker---
 ~/pre
 ~/html
