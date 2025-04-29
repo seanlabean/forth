@@ -11,7 +11,7 @@
 
 The beauty of Forth is in it's low-level nature. Being half a step above Assembly predicates the strict memory management and "walking on eggshells" approach to programming described earlier (indeed, if C gives you the ability to shoot yourself in the foot, with Forth you may blow both legs clean off). Yet, a half-step above Assembly means Forth enables you to do almost anything. You can take full advantage of the polymorphic nature of the language and define your own custom syntax, abstracting the language from the most basic of stack manipulations to a subroutine-based code that reads almost like a poem. ~+p
 
-I've written a Forth-based interpreter of custom Markdown-like .bth files whose text executes code in the Forth language itself. I wanted to dive deep into a project that fully embraces "Data is code". Indeed, any language can parse Markdown into HTML, but it ~iw feels so different when the markdown text is not simply being replaced with strings from a lookup table, but instead is invoking calls to functions which modify the flow of the program and organization of the stack to manipulate the output data. In a way, the input data is writing itself. A sample .bth file might look something like this:~/p
+I've written a Forth-based interpreter of custom Markdown-like .bth files whose text executes code in the Forth language itself. I wanted to dive deep into a project that fully embraces "Data is code". Indeed, any language can parse Markdown into HTML, but it ~iw feels so different when the markdown text is not simply being replaced with strings from a lookup table, but instead is invoking calls to functions which modify the flow of the program and organization of the stack to manipulate the output data. In a way, the input data is writing itself. A sample .mrr file might look something like this:~/p
 ~pre
 ^html
 ^h2 A beautiful heading ^h2
@@ -23,13 +23,13 @@ Another paragraph about Forth ^/p
 
 ~p Where the ~cw ^ sign informs the Forth program to break out of the continuous character dump to the outfile buffer to execute the Forth word that follow. For example, the program will interpret ~cw ^href as the ~iw word ~cw href which itself is defined as outputing the string ~code "<a href=" ~/code as well as the following token, ~cw https://slewis.wiki in the example above, then closing the ~cw a element with ~cw ">" . The following text "link to my blog" is then read into the output buffer and the ~cw a element is closed with ~cw ^/href . ~+p
 
-A curious self-referencial loop is taking place here. I am describing the program that parsed and wrote this text into the text you are reading which itself can be parsed by the same program. I don't really know what to make of that but it tickles me.~+p
+A curious self-referencial loop is taking place here. I am describing the program that parsed and wrote the above text from a .mrr format into the HTML text you are reading now which itself is parsable .mrr encoded text. I don't really know what to make of that but it tickles me.~+p
 
 As such, links are ~href https://forth.org easy to embed ~/href . You can add images too: ~img ../media/refs/1bit_shadows.png ~+p
 
 And Forth commands can be nested within themselves in the source text. Hence, you can hotlink images: ~href https://slewis.wiki/site/534C.html ~img ../media/refs/534C_char.png ~/href ~+p
 
-To take the previous meta self-references to the extreme, the following is the code necessary to process the .bth sample and is the same code that constructs this page. About 60 lines of Forth. ~/p
+To take the previous meta self-references to the extreme, the following is the code necessary to process the .mrr sample and is the same code that constructs this page. About 60 lines of Forth. ~/p
 
 ~pre
 ( configuration )
@@ -84,8 +84,8 @@ variable #token
 : rdrop     POSTPONE R> POSTPONE DROP ; IMMEDIATE
 : call 	    >R ;
 : entity    [CHAR] & emit type [CHAR] ; emit ;
-: ===> 	    OVER = IF DROP R> call entity THEN rdrop ; ( custom syntax; most benefits of polymorphism )
-: either&   [CHAR] & ===> S" amp" ; ( mapping symbols to entities )
+: ===> 	    OVER = IF DROP R> call entity THEN rdrop ;
+: either&   [CHAR] & ===> S" amp" ;
 : or<	    [CHAR] < ===> S" lt" ;
 : or>	    [CHAR] > ===> S" gt" ;
 : orESC     DUP [CHAR] ^ = IF DROP command RDROP EXIT THEN ;
@@ -95,7 +95,8 @@ variable #token
 : process   start format finish ;
 
 ( commands )
-: html	    ." <!DOCTYPE html><head><title>" srcfile TYPE ." </title></head><body>" CR ;
+: html	    ." <!DOCTYPE html><head><title>" srcfile TYPE 
+	    ." </title></head><body>" CR ;
 : /html     ." </body></html>" ;
 : p	    ." <p>" ;
 : /p	    ." </p>" ;

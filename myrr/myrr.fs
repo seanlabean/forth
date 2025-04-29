@@ -12,8 +12,8 @@
 warnings off
 
 ( configuration )
-: srcfile	S" myrr.mrr" ;
-: outfile 	S" myrr.html" ;
+: srcfile	S" vindauga.mrr" ;
+: outfile 	S" vindauga.html" ;
 
 ( input buffer )
 VARIABLE 'src ( address )
@@ -93,6 +93,9 @@ variable #token
 : iw	    ." <i>" token TYPE ." </i> " ;
 : bw        ." <b>" token TYPE ." </b> " ;
 : cw	    ." <code>" token TYPE ." </code> " ;
+: dw        ." <s>" token TYPE ." </s> " ;
+: del	    ." <del>" ;
+: /del	    ." </del>" ;
 : href	    ." <a href=" token TYPE ." >" ;
 : /href	    ." </a> " ;
 : pre	    ." <blockquote><pre>" ;
