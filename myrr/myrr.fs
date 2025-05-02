@@ -89,7 +89,7 @@ variable #token
 : li	    ." <li>" ;
 : /li	    ." </li>" CR ;
 : +li	    /li CR li ;
-: img	    ." <figure><img src='" token TYPE ." 'style='width:250px;'/></figure>" ;
+: img	    ." <figure><img src='" token TYPE ." 'style='height:250px;'/></figure>" ;
 : iw	    ." <i>" token TYPE ." </i> " ;
 : bw        ." <b>" token TYPE ." </b> " ;
 : cw	    ." <code>" token TYPE ." </code> " ;

@@ -8,9 +8,12 @@
 ~h2 Dev Log ~/h2
 ~p ~bw 03I05 - Next up: a data tree for the Scenes! I think having one central point of truth for Scene navigation will be nice, though it could also be possible to have a single dynamic list, which does not need to know about a central point of Scene organization. I don't think either one of these is the ~iw right way of doing this, merely a matter of preference at this point. I guess a central navigation map would be more efficient computationally. Secondly, I'd like to make a hover effect for when you are over a clickable item. This should be easy, just move the check Left-Click logic into the mouse position block for each Scene, and then call a ~cw draw() before checking for clicks. ~+p
 ~ul
-~li Hover effect -- ~bw 03I06 proof of concept. Mouse position within clickable region spawns a rectangle. Maybe have these permanently on for debug mode?~+li
-Navigation tree ~/li
+~li Hover effect -- ~bw 03I08 I was able to define an place a rectangle around each clickable item when moused over. I decided to construct a new struct to handle the rectangle bounds so they are easy to update and modify. Doing so changes both a clickable region and the corresponding rectangle simultaneously. ~bw 03I06 proof of concept. Mouse position within clickable region spawns a rectangle. Maybe have these permanently on for debug mode?~+li
+Navigation tree -- ~bw 03I10 Tried my hand at constructing a linked list that I can append to/pop from. The appending seems to work well, I can see the array elements update as I click through the images. I do not yet know how to access the tail value of the array though, which is frustrating. I do think this is the proper route to go since I can easily swap integer values for structs eventually. I'll try again later, I'll try to mimic Parallel Realities' implementation?~/li
 ~/ul
+~+p
+~img girlBox.png
+~/p
 
 ~p ~bw 03I03 - I have the basic structure and flow of the game established now. It will be a point-and-click style exploration game where scences can be discovered and observed. Each scene will be a low-res 1bit image (currently 128x128) with two states to give an sense of movement and life.
 ~+p
@@ -19,6 +22,8 @@ There's a few things I know will have to be developed quickly and soon to make t
 Another thing I am thinking about is the music and how it is handled. Right now, the music is loaded and called to play once, during the game initialization. If I want to play Scene-specific music, I'll need a way to call music loads and plays from within the game loop without repeatedly calling them every frame. Not sure how to do this, ~del but I suspect I will be able to monitor the music Channels to see if anything is currently playing and choose not to reinitialize. ~/del Actually since I only trigger the change of Scene at most once per loop and only if the mouse click conditions are met, I think I can simply embed this directly within the game loop. The music would just restart each time a new scene is loaded though.
 ~+p
 Finally (for now) I want to add a transition between Scenes, something like a fade out/in to/from black. Again, no idea how to do this but my assumption is that something to this effect already exists within SDL.
+~+p
+~img vindauga.png
 ~/p
 
 ~/html
