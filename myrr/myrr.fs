@@ -76,7 +76,7 @@ variable #token
 ( commands )
 : html	    ." <!DOCTYPE html><head><title>" outfile TYPE ." </title></head><body>" CR ;
 : /html     ." </body></html>" ;
-: style     ." <style> body { padding: 30px; text-align: absolute center; } </style>" CR ;
+: style     ." <style> body { padding: 30px; text-align: absolute center; width: 45%} </style>" CR ;
 : p	    ." <p>" ;
 : /p	    ." </p>" ;
 : +p	    /p CR p ;
